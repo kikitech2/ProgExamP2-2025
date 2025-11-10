@@ -1,0 +1,63 @@
+package com.retailer;
+public class ProductSales implements IProductSales {
+
+    private static final int SALES_LIMIT = 500;
+    private int[][] salesData = {
+            {300, 150, 700},
+            {250, 200, 600}
+    };
+
+    @Override
+    public int[][] GetProductSales() {
+        return salesData;
+    }
+
+    @Override
+    public int GetTotalSales() {
+        int total = 0;
+        for(int i = 0; i < salesData.length; i++) {
+            for(int j = 0; j < salesData[i].length; j++) {
+                total += salesData[i][j];
+            }
+        }
+        return total;
+    }
+
+    @Override
+    public int GetSalesOverLimit() {
+        int count = 0;
+        for(int[] yearSales : salesData) {
+            for(int sale : yearSales) {
+                if(sale > SALES_LIMIT) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    @Override
+    public int GetSalesUnderLimit() {
+        int count = 0;
+        for(int[] yearSales : salesData) {
+            for(int sale : yearSales) {
+                if(sale < SALES_LIMIT) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    @Override
+    public int GetProductsProcessed() {
+        return salesData.length;
+    }
+
+    @Override
+    public double GetAverageSales() {
+        return (double) GetTotalSales() / GetProductsProcessed();
+    }
+}
+
+
