@@ -7,11 +7,13 @@ public class ProductSales implements IProductSales {
             {250, 200, 600}
     };
 
+// i used ai to help me fix the loops with the methods.
+
     @Override
     public int[][] GetProductSales() {
         return salesData;
     }
-
+// method to get total sales
     @Override
     public int GetTotalSales() {
         int total = 0;
@@ -22,7 +24,7 @@ public class ProductSales implements IProductSales {
         }
         return total;
     }
-
+//method to get overlimited sales
     @Override
     public int GetSalesOverLimit() {
         int count = 0;
@@ -35,7 +37,7 @@ public class ProductSales implements IProductSales {
         }
         return count;
     }
-
+//method for sales under limit
     @Override
     public int GetSalesUnderLimit() {
         int count = 0;
@@ -53,7 +55,7 @@ public class ProductSales implements IProductSales {
     public int GetProductsProcessed() {
         return salesData.length;
     }
-
+//method for average sales
     @Override
     public double GetAverageSales() {
         return (double) GetTotalSales() / GetProductsProcessed();
