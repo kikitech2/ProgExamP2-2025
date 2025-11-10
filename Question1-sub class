@@ -1,0 +1,64 @@
+public class ProductSales implements IProductSales{
+
+    // method for total sales in the array
+    @Override
+    public int TotalSales(int[] productSales) {
+        int total = 0;
+        for(int sale : productSales) {
+            total += sale;
+        }
+        return total;
+    }
+
+ //   method calculates the average sales in the array
+    @Override
+    public double AverageSales(int[][] productSales) {
+        int totalSum = 0;
+        int count = 0;
+        for(int[] row : productSales) {
+            for(int sale : row) {
+                totalSum += sale;
+                count++;
+            }
+        }
+        if(count == 0) {
+            return 0.0;
+        }
+        return (double) totalSum / count;
+    }
+
+    // method calculates the max sale within the array
+    @Override
+    public int MaxSale(int[][] productSales) {
+
+        if(productSales == null || productSales.length == 0 || productSales[0].length == 0) {
+            return 0;
+        }
+        int max = productSales[0][0];
+        for(int[] row : productSales) {
+            for(int sale : row) {
+                if(sale > max) {
+                    max = sale;
+                }
+            }
+        }
+        return max;
+    }
+    //method calculates the min sale within the array
+    @Override
+    public int MinSale(int[][] productSales) {
+
+        if(productSales == null || productSales.length == 0 || productSales[0].length == 0) {
+            return 0;
+        }
+        int min = productSales[0][0];
+        for(int[] row : productSales) {
+            for(int sale : row) {
+                if(sale < min) {
+                    min = sale;
+                }
+            }
+        }
+        return min;
+    }
+}
