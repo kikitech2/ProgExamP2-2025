@@ -1,0 +1,38 @@
+package com.retailer.tests;
+import com.retailer.ProductSales;
+import org.junit.Before;
+import org.junit.Test;
+
+import static org.junit.Assert.*;
+
+public class ProductSalesUnitTest {
+    private final ProductSales productSales;
+
+    public ProductSalesUnitTest() {
+        productSales = new ProductSales();
+    }
+
+    @Before
+    public void setUp() {
+    }
+    @Test
+    public void GetSalesOverLimit_ReturnsNumberOfSales() {
+        int actualOverLimit = productSales.GetSalesOverLimit();
+        int expectedOverLimit = 2;
+        assertEquals(expectedOverLimit, actualOverLimit);
+    }
+
+    @Test
+    public void GetSalesUnderLimit_ReturnsNumberOfSales() {
+        int actualUnderLimit = productSales.GetSalesUnderLimit();
+        int expectedUnderLimit = 4;
+        assertEquals(expectedUnderLimit, actualUnderLimit);
+    }
+
+    @Test
+    public void GetTotalSales_ReturnsCorrectTotal() {
+        int actualTotal = productSales.GetTotalSales();
+        int expectedTotal = 2200;
+        assertEquals(expectedTotal, actualTotal);
+    }
+}
