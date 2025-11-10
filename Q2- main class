@@ -1,0 +1,168 @@
+import com.retailer.ProductSales;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.DecimalFormat;
+
+
+public class SoundRetailerApp extends JFrame implements ActionListener {
+    // Components and data field declarations.
+    private JButton loadDataButton;
+    private JButton saveDataButton;
+    private JLabel totalSalesLabel;
+    private JLabel averageSalesLabel;
+    private JLabel salesOverLabel;
+    private JLabel salesUnderLabel;
+    private JLabel yearsProcessedLabel;
+    private JTextArea outputTextArea;
+
+    // Menu Bar setup
+    private JMenuBar menuBar;
+    private JMenu fileMenu, toolsMenu;
+    private JMenuItem exitMenuItem, loadMenuItem, saveMenuItem, clearMenuItem;
+    private ProductSales productSales;
+    private static final DecimalFormat df = new DecimalFormat("#.##");
+
+    // JFrame setup
+    public SoundRetailerApp() {
+        setTitle("Processed Product Sales Application");
+        setSize(400, 550);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(null);
+
+        productSales = new ProductSales();
+
+        // JButtons setup
+        loadDataButton = new JButton("Load Product Data");
+        loadDataButton.setBounds(20, 20, 150, 30);
+        loadDataButton.addActionListener(this);
+        add(loadDataButton);
+
+        saveDataButton = new JButton("Save Product Data");
+        saveDataButton.setBounds(190, 20, 150, 30);
+        saveDataButton.addActionListener(this);
+        add(saveDataButton);
+
+        // TextArea setup
+        outputTextArea = new JTextArea();
+        JScrollPane scrollPane = new JScrollPane(outputTextArea);
+        scrollPane.setBounds(20, 60, 350, 150);
+        add(scrollPane);
+
+        // JLabel setup
+        totalSalesLabel = new JLabel("Total Sales: ");
+        totalSalesLabel.setBounds(20, 230, 300, 20);
+        add(totalSalesLabel);
+
+        averageSalesLabel = new JLabel("Average Sales: ");
+        averageSalesLabel.setBounds(20, 250, 300, 20);
+        add(averageSalesLabel);
+
+        salesOverLabel = new JLabel("Sales over limit: ");
+        salesOverLabel.setBounds(20, 270, 300, 20);
+        add(salesOverLabel);
+
+        salesUnderLabel = new JLabel("Sales under limit: ");
+        salesUnderLabel.setBounds(20, 290, 300, 20);
+        add(salesUnderLabel);
+
+        yearsProcessedLabel = new JLabel("Years Processed: 0");
+        yearsProcessedLabel.setBounds(20, 310, 300, 20);
+        add(yearsProcessedLabel);
+
+        setupMenuBar();
+        setVisible(true);
+    }
+    private void setupMenuBar() {
+        menuBar = new JMenuBar();
+
+        // This is the file Menu setup
+        fileMenu = new JMenu("File");
+        exitMenuItem = new JMenuItem("Exit");
+        exitMenuItem.addActionListener(this);
+        fileMenu.add(exitMenuItem);
+
+        // This is the Tools Menu setup
+        toolsMenu = new JMenu("Tools");
+        loadMenuItem = new JMenuItem("Load Product Data");
+        loadMenuItem.addActionListener(this);
+        saveMenuItem = new JMenuItem("Save Product Data");
+        saveMenuItem.addActionListener(this);
+        clearMenuItem = new JMenuItem("Clear");
+        clearMenuItem.addActionListener(this);
+
+        toolsMenu.add(loadMenuItem);
+        toolsMenu.add(saveMenuItem);
+        toolsMenu.add(clearMenuItem);
+
+        menuBar.add(fileMenu);
+        menuBar.add(toolsMenu);
+        setJMenuBar(menuBar);
+    }
+// I used AI tools to help me with an infinite loop.
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == loadDataButton || e.getSource() == loadMenuItem) {
+            loadProductDataLogic();
+        }
+        else if (e.getSource() == saveDataButton || e.getSource() == saveMenuItem) {
+            saveProductDataLogic();
+        }
+        else if (e.getSource() == clearMenuItem) {
+            clearAppLogic();
+        }
+        else if (e.getSource() == exitMenuItem) {
+            System.exit(0);
+        }
+    }
+    private void loadProductDataLogic() {
+        int totalSales = productSales.GetTotalSales();
+        double averageSales = productSales.GetAverageSales();
+        int salesOver = productSales.GetSalesOverLimit();
+        int salesUnder = productSales.GetSalesUnderLimit();
+        int yearsProcessed = productSales.GetProductsProcessed();
+
+        // Output layout
+        StringBuilder output = new StringBuilder();
+        output.append("DATA LOG\n");
+        output.append("***************************\n");
+        output.append("Total Sales: ").append(totalSales).append("\n");
+        output.append("Average Sales: ").append(df.format(averageSales)).append("\n");
+        output.append("Sales over limit: ").append(salesOver).append("\n");
+        output.append("Sales under limit: ").append(salesUnder).append("\n");
+        outputTextArea.setText(output.toString());
+
+        totalSalesLabel.setText("Total Sales: " + totalSales);
+        averageSalesLabel.setText("Average Sales: " + df.format(averageSales));
+        salesOverLabel.setText("Sales over limit: " + salesOver);
+        salesUnderLabel.setText("Sales under limit: " + salesUnder);
+        yearsProcessedLabel.setText("Years Processed: " + yearsProcessed);
+    }
+
+    private void saveProductDataLogic() {
+        String dataToSave = outputTextArea.getText();
+
+        try (PrintWriter writer = new PrintWriter(new FileWriter("data.txt"))) {
+            writer.print(dataToSave);
+            JOptionPane.showMessageDialog(this, "Data successfully saved to data.txt", "Save Success", JOptionPane.INFORMATION_MESSAGE);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error saving file: " + ex.getMessage(), "Save Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    private void clearAppLogic() {
+        outputTextArea.setText("");
+        totalSalesLabel.setText("Total Sales: ");
+        averageSalesLabel.setText("Average Sales: ");
+        salesOverLabel.setText("Sales over limit: ");
+        salesUnderLabel.setText("Sales under limit: ");
+        yearsProcessedLabel.setText("Years Processed: 0");
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new SoundRetailerApp());
+    }
+}
