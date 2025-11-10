@@ -1,0 +1,36 @@
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class RetailCompany {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        //Declarations
+        IProductSales salesTracker = new ProductSales();
+        int[] salesData1D = {400, 700, 150, 250, 300, 400};
+        int[][] salesData2D = {salesData1D};
+
+//Print layout of the Product sales report
+        System.out.println("PRODUCT SALES REPORT - 2025");
+        System.out.println("----------------------------");
+
+// method calculates the total sales produced within the array.
+        int total = salesTracker.TotalSales(salesData1D);
+        System.out.println("Total sales: " + total);
+
+//method calculates the average sales produced
+        double average = salesTracker.AverageSales(salesData2D);
+        int roundedAverage = (int) Math.round(average);
+        System.out.println("Average Sales: " + roundedAverage);
+
+        // method calculates the max sale within the array
+        int max = salesTracker.MaxSale(salesData2D);
+        System.out.println("Maximum Sales: " + max);
+
+//method calculates the min sale within the array
+        int min = salesTracker.MinSale(salesData2D);
+        System.out.println("Minimum sales: " + min);
+        System.out.println("---------------------------");
+    }
+}
