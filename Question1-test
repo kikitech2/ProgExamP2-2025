@@ -1,0 +1,35 @@
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+
+public class ProductSalesTest {
+    //Declarations
+    private final ProductSales salesTracker = new ProductSales();
+    private final int[] test1DArray = {10, 20, 70, 0};
+    private final int[][] test2DArray = {
+            {100, 200},
+            {50, 350}
+    };
+// tests the total sales
+    @Test
+    void testTotalSales() {
+        assertEquals(100, salesTracker.TotalSales(test1DArray), "TotalSales method failed to calculate the correct sum.");
+    }
+    // tests the average sales
+    @Test
+    void testMaxSale() {
+
+        assertEquals(350, salesTracker.MaxSale(test2DArray), "MaxSale method failed to find the maximum value.");
+    }
+    // tests the max sales
+    @Test
+    void testMinSale() {
+        assertEquals(50, salesTracker.MinSale(test2DArray), "MinSale method failed to find the minimum value.");
+    }
+    // tests the min sales
+    @Test
+    void testAverageSales() {
+        assertEquals(175.0, salesTracker.AverageSales(test2DArray), 0.001, "AverageSales method failed to calculate the correct average.");
+
+    }
+}
